@@ -1,12 +1,6 @@
-// --- STATE MANAGEMENT ---
-let state = {
-    sales: 50,
-    morale: 50,
-    corporate: 50,
-    budget: 50
-};
+let state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
+let lastCard = null; // Tracks the last card drawn to prevent repeats
 
-// --- THE CARD DECK (Test Batch) ---
 const deck = [
     {
         character: "Dwight Schrute",
@@ -28,9 +22,6 @@ const deck = [
     }
 ];
 
-let currentCardIndex = 0;
-
-// --- DOM ELEMENTS ---
 const fillSales = document.getElementById('fill-sales');
 const fillMorale = document.getElementById('fill-morale');
 const fillCorporate = document.getElementById('fill-corporate');
@@ -41,15 +32,12 @@ const cardText = document.getElementById('card-text');
 const btnLeft = document.getElementById('btn-left');
 const btnRight = document.getElementById('btn-right');
 
-// --- ENGINE LOGIC ---
 function updateUI() {
-    // Keep stats between 0 and 100
     state.sales = Math.max(0, Math.min(100, state.sales));
     state.morale = Math.max(0, Math.min(100, state.morale));
     state.corporate = Math.max(0, Math.min(100, state.corporate));
     state.budget = Math.max(0, Math.min(100, state.budget));
 
-    // Update the visual width of the bars
     fillSales.style.width = state.sales + '%';
     fillMorale.style.width = state.morale + '%';
     fillCorporate.style.width = state.corporate + '%';
@@ -59,17 +47,18 @@ function updateUI() {
 }
 
 function loadCard() {
-    // Pick a random card from the deck
-    const card = deck[Math.floor(Math.random() * deck.length)];
+    // Pick a random card, but refuse to draw the exact same one twice
+    let card = deck[Math.floor(Math.random() * deck.length)];
+    while (card === lastCard) {
+        card = deck[Math.floor(Math.random() * deck.length)];
+    }
+    lastCard = card;
     
     cardName.innerText = card.character;
     cardText.innerText = `"${card.text}"`;
-    
-    // Update button text to match the choices
     btnLeft.innerText = card.left.text;
     btnRight.innerText = card.right.text;
 
-    // Attach the impact logic to the buttons
     btnLeft.onclick = () => applyImpact(card.left.impact);
     btnRight.onclick = () => applyImpact(card.right.impact);
 }
@@ -81,29 +70,33 @@ function applyImpact(impact) {
     state.budget += impact.budget;
 
     updateUI();
-    loadCard(); // Instantly load the next card
+    loadCard();
 }
 
 function checkGameOver() {
     let reason = "";
 
-    if (state.sales <= 0) reason = "Sales hit zero. The Scranton branch was absorbed by Stamford. You are fired.";
+    if (state.sales <= 0) reason = "Sales hit zero. The Scranton branch was absorbed by Stamford.";
     if (state.budget <= 0) reason = "You bankrupted the branch. David Wallace drove down to fire you personally.";
-    if (state.corporate <= 0) reason = "Corporate lost all faith in your leadership. You've been replaced by a smart AI.";
-    if (state.morale <= 0) reason = "Morale is so low that Toby actually filed a report. HR stepped in and fired you.";
+    if (state.corporate <= 0) reason = "Corporate lost all faith in your leadership. You've been replaced.";
+    if (state.morale <= 0) reason = "Morale is so low that Toby filed a report. HR fired you.";
     
-    if (state.morale >= 100) reason = "The office became a non-stop party. No work got done, and the branch was closed.";
-    if (state.corporate >= 100) reason = "Corporate loved you so much they promoted you to Jan's job... but you were arrested for fraud.";
+    if (state.morale >= 100) reason = "The office became a non-stop party. No work got done, and the branch closed.";
+    if (state.corporate >= 100) reason = "Corporate loved you so much they promoted you... but you were arrested for fraud.";
 
     if (reason !== "") {
-        alert("GAME OVER: " + reason);
-        // Reset the game
-        state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
-        updateUI();
+        document.getElementById('game-over-reason').innerText = reason;
+        document.getElementById('game-over-modal').style.display = 'flex';
     }
 }
 
-// Start the game!
+// Modal Restart Button Logic
+document.getElementById('restart-btn').onclick = () => {
+    state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
+    document.getElementById('game-over-modal').style.display = 'none';
+    updateUI();
+    loadCard();
+};
+
 updateUI();
 loadCard();
-
