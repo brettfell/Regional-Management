@@ -1,1 +1,121 @@
+body {
+    background-color: #e8eaed; /* Generic Office Wall Gray */
+    color: #333;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+/* HUD Styling */
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #004182; /* Dunder Mifflin Blue */
+    color: white;
+}
+
+.stat-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 22%;
+}
+
+.stat-icon {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #002b54;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    background-color: #fff;
+    width: 50%; /* Starts at 50% */
+    transition: width 0.3s ease-in-out;
+}
+
+/* Card Styling */
+.card-area {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f9;
+}
+
+.card {
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #004182;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.card p {
+    font-size: 1.2em;
+    line-height: 1.4;
+    font-style: italic;
+    min-height: 80px;
+}
+
+/* Control Buttons */
+.controls {
+    display: flex;
+    padding: 20px;
+    gap: 15px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+}
+
+.choice-btn {
+    flex: 1;
+    padding: 20px 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    color: #333;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.choice-btn:active {
+    transform: scale(0.98);
+}
+
+#btn-left { border-bottom: 4px solid #d9534f; } /* Red accent for left */
+#btn-right { border-bottom: 4px solid #5cb85c; } /* Green accent for right */
 
