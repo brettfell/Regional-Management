@@ -1,7 +1,6 @@
 let state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
 let lastCard = null; 
 
-// NEW: Tracking Days and High Score
 let days = 1;
 let highScore = localStorage.getItem('officeHighScore') || 0;
 
@@ -16,7 +15,6 @@ const cardText = document.getElementById('card-text');
 const btnLeft = document.getElementById('btn-left');
 const btnRight = document.getElementById('btn-right');
 
-// NEW: Scoreboard DOM Elements
 const currentDayEl = document.getElementById('current-day');
 const highScoreEl = document.getElementById('high-score');
 
@@ -31,7 +29,6 @@ function updateUI() {
     fillCorporate.style.width = state.corporate + '%';
     fillBudget.style.width = state.budget + '%';
 
-    // Update Scoreboard text
     currentDayEl.innerText = `Day: ${days}`;
     highScoreEl.innerText = `Best: ${highScore}`;
 
@@ -39,13 +36,25 @@ function updateUI() {
 }
 
 function loadCard() {
+    // If cards.js didn't load properly, stop the function
+    if (typeof deck === 'undefined' || deck.length === 0) {
+        cardName.innerText = "Error";
+        cardText.innerText = "Deck not found. Check cards.js link.";
+        return;
+    }
+
     let card = deck[Math.floor(Math.random() * deck.length)];
-    while (card === lastCard) {
+    while (card === lastCard && deck.length > 1) {
         card = deck[Math.floor(Math.random() * deck.length)];
     }
     lastCard = card;
     
-    cardImage.src = card.image;
+    // Safety check for image
+    if (cardImage) {
+        cardImage.src = card.image || "";
+        cardImage.style.display = card.image ? 'inline-block' : 'none';
+    }
+
     cardName.innerText = card.character;
     cardText.innerText = `"${card.text}"`;
     btnLeft.innerText = card.left.text;
@@ -61,7 +70,7 @@ function applyImpact(impact) {
     state.corporate += impact.corporate;
     state.budget += impact.budget;
 
-    days++; // NEW: Advance the day with every swipe
+    days++; 
     updateUI();
     loadCard();
 }
@@ -78,7 +87,6 @@ function checkGameOver() {
     if (state.corporate >= 100) reason = "Corporate loved you so much they promoted you... but you were arrested for fraud.";
 
     if (reason !== "") {
-        // NEW: Check for High Score
         if (days > highScore) {
             highScore = days;
             localStorage.setItem('officeHighScore', highScore);
@@ -92,10 +100,9 @@ function checkGameOver() {
     }
 }
 
-// Modal Restart Button Logic
 document.getElementById('restart-btn').onclick = () => {
     state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
-    days = 1; // Reset days
+    days = 1; 
     document.getElementById('game-over-modal').style.display = 'none';
     updateUI();
     loadCard();
