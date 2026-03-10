@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Regional Manager</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f4f4f9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<div class="game-container">
+    <header class="stats-header">
+        <div class="stat-group">
+            <span class="stat-icon" title="Sales">📈</span>
+            <div class="progress-bar"><div class="fill" id="fill-sales"></div></div>
+        </div>
+        <div class="stat-group">
+            <span class="stat-icon" title="Morale">😊</span>
+            <div class="progress-bar"><div class="fill" id="fill-morale"></div></div>
+        </div>
+        <div class="stat-group">
+            <span class="stat-icon" title="Corporate">🏢</span>
+            <div class="progress-bar"><div class="fill" id="fill-corporate"></div></div>
+        </div>
+        <div class="stat-group">
+            <span class="stat-icon" title="Budget">💵</span>
+            <div class="progress-bar"><div class="fill" id="fill-budget"></div></div>
+        </div>
+    </header>
+
+    <main class="card-area">
+        <div class="card" id="active-card">
+            <h2 id="card-name">Character Name</h2>
+            <p id="card-text">"Question text goes here..."</p>
+        </div>
+    </main>
+
+    <div class="controls">
+        <button id="btn-left" class="choice-btn">No</button>
+        <button id="btn-right" class="choice-btn">Yes</button>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
 
