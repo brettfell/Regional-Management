@@ -1,36 +1,24 @@
 let state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
-let lastCard = null; // Tracks the last card drawn to prevent repeats
+let lastCard = null; 
 
-const deck = [
-    {
-        character: "Dwight Schrute",
-        text: "I found a clove cigarette in the parking lot. I need authorization to lock down the building and interrogate everyone.",
-        left: { text: "Absolutely not.", impact: { sales: 0, morale: +10, corporate: -5, budget: 0 } },
-        right: { text: "Do it.", impact: { sales: -20, morale: -20, corporate: +10, budget: 0 } }
-    },
-    {
-        character: "Michael Scott",
-        text: "I want to rent a bouncy castle for the warehouse. It will drastically improve team synergy. Just sign this expense report.",
-        left: { text: "We don't have the budget.", impact: { sales: +5, morale: -15, corporate: +10, budget: 0 } },
-        right: { text: "Here is the company card.", impact: { sales: -10, morale: +25, corporate: -20, budget: -30 } }
-    },
-    {
-        character: "Jim Halpert",
-        text: "I put Dwight's stapler in jello again, but I need 50 bucks from petty cash to reimburse him for the ruined stapler.",
-        left: { text: "Grow up, Jim.", impact: { sales: +10, morale: -10, corporate: +5, budget: 0 } },
-        right: { text: "Worth it. Here's $50.", impact: { sales: -5, morale: +15, corporate: -10, budget: -10 } }
-    }
-];
+// NEW: Tracking Days and High Score
+let days = 1;
+let highScore = localStorage.getItem('officeHighScore') || 0;
 
 const fillSales = document.getElementById('fill-sales');
 const fillMorale = document.getElementById('fill-morale');
 const fillCorporate = document.getElementById('fill-corporate');
 const fillBudget = document.getElementById('fill-budget');
 
+const cardImage = document.getElementById('card-image');
 const cardName = document.getElementById('card-name');
 const cardText = document.getElementById('card-text');
 const btnLeft = document.getElementById('btn-left');
 const btnRight = document.getElementById('btn-right');
+
+// NEW: Scoreboard DOM Elements
+const currentDayEl = document.getElementById('current-day');
+const highScoreEl = document.getElementById('high-score');
 
 function updateUI() {
     state.sales = Math.max(0, Math.min(100, state.sales));
@@ -43,17 +31,21 @@ function updateUI() {
     fillCorporate.style.width = state.corporate + '%';
     fillBudget.style.width = state.budget + '%';
 
+    // Update Scoreboard text
+    currentDayEl.innerText = `Day: ${days}`;
+    highScoreEl.innerText = `Best: ${highScore}`;
+
     checkGameOver();
 }
 
 function loadCard() {
-    // Pick a random card, but refuse to draw the exact same one twice
     let card = deck[Math.floor(Math.random() * deck.length)];
     while (card === lastCard) {
         card = deck[Math.floor(Math.random() * deck.length)];
     }
     lastCard = card;
     
+    cardImage.src = card.image;
     cardName.innerText = card.character;
     cardText.innerText = `"${card.text}"`;
     btnLeft.innerText = card.left.text;
@@ -69,6 +61,7 @@ function applyImpact(impact) {
     state.corporate += impact.corporate;
     state.budget += impact.budget;
 
+    days++; // NEW: Advance the day with every swipe
     updateUI();
     loadCard();
 }
@@ -85,6 +78,15 @@ function checkGameOver() {
     if (state.corporate >= 100) reason = "Corporate loved you so much they promoted you... but you were arrested for fraud.";
 
     if (reason !== "") {
+        // NEW: Check for High Score
+        if (days > highScore) {
+            highScore = days;
+            localStorage.setItem('officeHighScore', highScore);
+            reason += `\n\n🏆 NEW HIGH SCORE: ${days} Days!`;
+        } else {
+            reason += `\n\nYou survived ${days} Days. (Best: ${highScore})`;
+        }
+
         document.getElementById('game-over-reason').innerText = reason;
         document.getElementById('game-over-modal').style.display = 'flex';
     }
@@ -93,6 +95,7 @@ function checkGameOver() {
 // Modal Restart Button Logic
 document.getElementById('restart-btn').onclick = () => {
     state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
+    days = 1; // Reset days
     document.getElementById('game-over-modal').style.display = 'none';
     updateUI();
     loadCard();
