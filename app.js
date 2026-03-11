@@ -19,7 +19,6 @@ const currentDayEl = document.getElementById('current-day');
 const highScoreEl = document.getElementById('high-score');
 const themeSong = document.getElementById('theme-song');
 
-// --- THE DUNDIES DIRECTORY ---
 const dundiesList = [
     { id: "survivor_30", name: "The Survivor Dundie", desc: "Survive 30 Days in a single run.", icon: "🗓️" },
     { id: "survivor_50", name: "The Golden Ticket Dundie", desc: "Survive 50 Days in a single run.", icon: "🎫" },
@@ -30,7 +29,6 @@ const dundiesList = [
     { id: "fired_sales", name: "The Stamford Merge Dundie", desc: "Get absorbed by Stamford (Sales hit 0%).", icon: "📦" }
 ];
 
-// --- MODAL & BUTTON WIRING ---
 document.getElementById('start-btn').onclick = () => {
     document.getElementById('start-modal').style.display = 'none';
     if(themeSong) {
@@ -67,7 +65,6 @@ function renderDundies() {
     });
 }
 
-// Checks if a Dundie is new, saves it, and returns the name to display
 function checkDundieUnlock(id) {
     if (!unlockedDundies.includes(id)) {
         unlockedDundies.push(id);
@@ -91,7 +88,7 @@ function updateUI() {
 
     fillSales.classList.toggle('danger', state.sales <= 20 || state.sales >= 80);
     fillMorale.classList.toggle('danger', state.morale <= 20 || state.morale >= 80);
-    fillCorporate.classList.toggle('danger', corporate <= 20 || state.corporate >= 80);
+    fillCorporate.classList.toggle('danger', state.corporate <= 20 || state.corporate >= 80);
     fillBudget.classList.toggle('danger', state.budget <= 20 || state.budget >= 80);
 
     currentDayEl.innerText = `Day: ${days}`;
@@ -102,9 +99,7 @@ function updateUI() {
 function loadCard() {
     if (typeof deck === 'undefined' || deck.length === 0) return;
 
-    if (activeDeck.length === 0) {
-        activeDeck = [...deck]; 
-    }
+    if (activeDeck.length === 0) activeDeck = [...deck]; 
 
     const randomIndex = Math.floor(Math.random() * activeDeck.length);
     const card = activeDeck.splice(randomIndex, 1)[0]; 
@@ -130,8 +125,6 @@ function applyImpact(impact) {
     state.budget += impact.budget;
 
     days++; 
-    
-    // Check for milestone Dundies during the run!
     if (days === 30) checkDundieUnlock('survivor_30');
     if (days === 50) checkDundieUnlock('survivor_50');
 
@@ -159,9 +152,7 @@ function checkGameOver() {
             reason += `\n\nYou survived ${days} Days. (Best: ${highScore})`;
         }
         
-        // Append newly unlocked Dundie text to the game over screen
         reason += newDundieText;
-
         document.getElementById('game-over-reason').innerText = reason;
         document.getElementById('game-over-modal').style.display = 'flex';
     }
@@ -175,3 +166,49 @@ document.getElementById('restart-btn').onclick = () => {
     updateUI();
     loadCard();
 };
+
+// --- SWIPE MECHANICS ---
+const cardElement = document.getElementById('active-card');
+let isDragging = false;
+let startX = 0;
+let currentX = 0;
+
+cardElement.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
+cardElement.addEventListener('touchmove', (e) => onDrag(e.touches[0].clientX));
+cardElement.addEventListener('touchend', stopDrag);
+
+cardElement.addEventListener('mousedown', (e) => startDrag(e.clientX));
+document.addEventListener('mousemove', (e) => onDrag(e.clientX));
+document.addEventListener('mouseup', stopDrag);
+
+function startDrag(x) {
+    isDragging = true;
+    startX = x;
+    cardElement.style.transition = 'none'; 
+}
+
+function onDrag(x) {
+    if (!isDragging) return;
+    currentX = x;
+    const deltaX = currentX - startX;
+    const rotate = deltaX * 0.05; 
+    cardElement.style.transform = `translate(${deltaX}px, 0) rotate(${rotate}deg)`;
+}
+
+function stopDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    
+    const deltaX = currentX - startX;
+    cardElement.style.transition = 'transform 0.3s ease'; 
+    
+    if (deltaX > 100) {
+        btnRight.click(); 
+    } else if (deltaX < -100) {
+        btnLeft.click();  
+    }
+    
+    cardElement.style.transform = '';
+    startX = 0;
+    currentX = 0;
+}
