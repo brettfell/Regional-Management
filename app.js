@@ -29,6 +29,12 @@ function updateUI() {
     fillCorporate.style.width = state.corporate + '%';
     fillBudget.style.width = state.budget + '%';
 
+    // NEW: Danger Zone Logic (Activates if <= 20 or >= 80)
+    fillSales.classList.toggle('danger', state.sales <= 20 || state.sales >= 80);
+    fillMorale.classList.toggle('danger', state.morale <= 20 || state.morale >= 80);
+    fillCorporate.classList.toggle('danger', state.corporate <= 20 || state.corporate >= 80);
+    fillBudget.classList.toggle('danger', state.budget <= 20 || state.budget >= 80);
+
     currentDayEl.innerText = `Day: ${days}`;
     highScoreEl.innerText = `Best: ${highScore}`;
 
