@@ -53,7 +53,15 @@ body {
     height: 100%;
     background-color: #fff;
     width: 50%; 
-    transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Added color transition */
+}
+
+/* NEW: The Danger Zone Color */
+.fill.danger {
+    background-color: #d9534f; /* Urgent Red */
+}
+
+
 }
 
 .score-board {
