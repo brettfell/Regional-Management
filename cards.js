@@ -176,4 +176,128 @@ const deck = [
         left: { text: "Keep selling paper.", impact: { sales: +15, morale: -10, corporate: -15, budget: 0 } },
         right: { text: "Halt work and clean.", impact: { sales: -20, morale: -5, corporate: +20, budget: 0 } }
     }
+    // --- EXPANSION PACK 1: SCRANTON CHAOS ---
+
+    // MICHAEL
+    {
+        character: "Michael Scott", image: "michael.gif",
+        text: "I am hiding golden tickets in five boxes of paper. Whoever finds them gets 10% off their order. Good idea, right?",
+        left: { text: "Too much liability.", impact: { sales: -5, morale: -5, corporate: +10, budget: 0 } },
+        right: { text: "Pure genius.", impact: { sales: +15, morale: +10, corporate: -20, budget: -15 } }
+    },
+    {
+        character: "Michael Scott", image: "michael.gif",
+        text: "Todd Packer just left a 'package' in my office as a joke. I need the cleaning crew in here immediately.",
+        left: { text: "Clean it yourself.", impact: { sales: 0, morale: -10, corporate: +5, budget: 0 } },
+        right: { text: "Hire emergency cleaners.", impact: { sales: 0, morale: +5, corporate: -5, budget: -15 } }
+    },
+    {
+        character: "Michael Scott", image: "michael.gif",
+        text: "I stepped on a George Foreman grill this morning. I need someone to come rub butter on my foot.",
+        left: { text: "Absolutely not.", impact: { sales: +5, morale: -15, corporate: +5, budget: 0 } },
+        right: { text: "Send Ryan.", impact: { sales: -5, morale: +10, corporate: -5, budget: 0 } }
+    },
+
+    // DWIGHT
+    {
+        character: "Dwight Schrute", image: "dwight.gif",
+        text: "I have noticed a decrease in productivity. I will begin locking the main doors from 8 AM to 5 PM.",
+        left: { text: "That is a fire hazard.", impact: { sales: 0, morale: +10, corporate: +5, budget: 0 } },
+        right: { text: "Good initiative.", impact: { sales: +15, morale: -20, corporate: -10, budget: 0 } }
+    },
+    {
+        character: "Dwight Schrute", image: "dwight.gif",
+        text: "I brought in a goose that I hit with my car. I plan to prepare it in the breakroom for lunch.",
+        left: { text: "Throw it out.", impact: { sales: 0, morale: +15, corporate: +5, budget: 0 } },
+        right: { text: "It's a Christmas miracle.", impact: { sales: -10, morale: -20, corporate: -5, budget: +5 } }
+    },
+
+    // JIM & PAM
+    {
+        character: "Jim Halpert", image: "jim.gif",
+        text: "I convinced Dwight that it's Thursday instead of Friday. Please don't tell him, it's the only thing keeping me going.",
+        left: { text: "Tell Dwight the truth.", impact: { sales: +5, morale: -10, corporate: 0, budget: 0 } },
+        right: { text: "Keep the secret.", impact: { sales: -5, morale: +15, corporate: -5, budget: 0 } }
+    },
+    {
+        character: "Pam Beesly", image: "pam.gif",
+        text: "Jim and I want to start a 'Finer Things Club' in the breakroom. No paper, plastics, or Andy allowed.",
+        left: { text: "Deny the club.", impact: { sales: +5, morale: -10, corporate: +5, budget: 0 } },
+        right: { text: "Approve the club.", impact: { sales: -10, morale: +15, corporate: -5, budget: 0 } }
+    },
+
+    // THE ACCOUNTANTS
+    {
+        character: "Kevin Malone", image: "kevin.gif",
+        text: "I accidentally shredded my corporate credit card. And my driver's license. Can we order new ones?",
+        left: { text: "You're paying for it.", impact: { sales: 0, morale: -10, corporate: +5, budget: +5 } },
+        right: { text: "Order replacements.", impact: { sales: 0, morale: +5, corporate: -10, budget: -10 } }
+    },
+    {
+        character: "Angela Martin", image: "angela.gif",
+        text: "I brought Bandit to work because he has a cough. He will be living in my bottom filing cabinet today.",
+        left: { text: "Take the cat home.", impact: { sales: +5, morale: -15, corporate: +10, budget: 0 } },
+        right: { text: "Just keep him quiet.", impact: { sales: -5, morale: +10, corporate: -5, budget: 0 } }
+    },
+    {
+        character: "Oscar Martinez", image: "oscar.gif",
+        text: "Actually, the way we calculate overtime is illegal. If Corporate finds out, we'll be fined heavily.",
+        left: { text: "Ignore the error.", impact: { sales: +10, morale: -5, corporate: -20, budget: +15 } },
+        right: { text: "Fix the payroll.", impact: { sales: -5, morale: +15, corporate: +10, budget: -20 } }
+    },
+
+    // ANNEX & BREAKROOM
+    {
+        character: "Kelly Kapoor", image: "kelly.gif",
+        text: "I need to take a sick day. The season finale of my show is tonight and I have to emotionally prepare.",
+        left: { text: "That's not an illness.", impact: { sales: +10, morale: -15, corporate: +5, budget: 0 } },
+        right: { text: "Take the day.", impact: { sales: -10, morale: +15, corporate: -5, budget: -5 } }
+    },
+    {
+        character: "Phyllis Vance", image: "phyllis.gif",
+        text: "Bob Vance bought me a new perfume in Metropolitan Orlando. It's made from real pine. Do you like it?",
+        left: { text: "It smells terrible.", impact: { sales: +5, morale: -15, corporate: 0, budget: 0 } },
+        right: { text: "It's lovely.", impact: { sales: -10, morale: +10, corporate: 0, budget: 0 } }
+    },
+    {
+        character: "Stanley Hudson", image: "stanley.gif",
+        text: "My heart monitor keeps beeping. Michael is stressing me out. I need a week of paid medical leave.",
+        left: { text: "Deny the leave.", impact: { sales: +15, morale: -20, corporate: +10, budget: +5 } },
+        right: { text: "Approve the leave.", impact: { sales: -15, morale: +10, corporate: -10, budget: -15 } }
+    },
+    {
+        character: "Toby Flenderson", image: "toby.gif",
+        text: "I printed out a 40-page memo on desk ergonomics. I'd like to read it to the staff for the next two hours.",
+        left: { text: "Nobody wants that.", impact: { sales: +10, morale: +10, corporate: -10, budget: 0 } },
+        right: { text: "Read the memo.", impact: { sales: -20, morale: -20, corporate: +15, budget: 0 } }
+    },
+
+    // CREED & MEREDITH
+    {
+        character: "Creed Bratton", image: "creed.gif",
+        text: "I need three plastic chairs, a tarp, and access to the loading dock at midnight. No questions.",
+        left: { text: "Call the police.", impact: { sales: 0, morale: -10, corporate: +15, budget: 0 } },
+        right: { text: "Here are the keys.", impact: { sales: 0, morale: +5, corporate: -20, budget: 0 } }
+    },
+    {
+        character: "Meredith Palmer", image: "meredith.gif",
+        text: "A bat bit me in the ceiling on my smoke break. I feel fine, but I probably shouldn't do any work today.",
+        left: { text: "Go to the hospital.", impact: { sales: -10, morale: +10, corporate: +10, budget: -5 } },
+        right: { text: "Just wrap it in a napkin.", impact: { sales: +5, morale: -10, corporate: -15, budget: 0 } }
+    },
+
+    // WAREHOUSE & CORPORATE
+    {
+        character: "Darryl Philbin", image: "darryl.gif",
+        text: "Michael is down here trying to use the baler again. I'm going to physically restrain him if you don't come get him.",
+        left: { text: "Let him use the baler.", impact: { sales: 0, morale: -15, corporate: -25, budget: -10 } },
+        right: { text: "I'll be right there.", impact: { sales: -10, morale: +10, corporate: +10, budget: 0 } }
+    },
+    {
+        character: "Jo Bennett", image: "corporate.gif",
+        text: "We are printing in all colors! Why is every email printed in color?! I want color printing locked down immediately.",
+        left: { text: "Defend the staff.", impact: { sales: 0, morale: +15, corporate: -20, budget: -10 } },
+        right: { text: "Lock it down.", impact: { sales: 0, morale: -15, corporate: +20, budget: +15 } }
+    }
+
 ];
