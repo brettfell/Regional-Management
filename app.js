@@ -1,6 +1,12 @@
-let state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
-let activeDeck = []; 
-let days = 1;
+// --- AUTO-SAVE LOADER ---
+// Check if a game was saved previously
+let savedGame = JSON.parse(localStorage.getItem('officeSaveState'));
+
+// If a save exists, load it. If not, start fresh!
+let state = savedGame ? savedGame.state : { sales: 50, morale: 50, corporate: 50, budget: 50 };
+let activeDeck = savedGame ? savedGame.activeDeck : []; 
+let days = savedGame ? savedGame.days : 1;
+
 let highScore = localStorage.getItem('officeHighScore') || 0;
 let unlockedDundies = JSON.parse(localStorage.getItem('officeDundies')) || [];
 
@@ -128,6 +134,13 @@ function applyImpact(impact) {
     if (days === 30) checkDundieUnlock('survivor_30');
     if (days === 50) checkDundieUnlock('survivor_50');
 
+    // NEW: Auto-save the game every time you swipe!
+    localStorage.setItem('officeSaveState', JSON.stringify({
+        state: state,
+        days: days,
+        activeDeck: activeDeck
+    }));
+
     updateUI();
     loadCard();
 }
@@ -153,6 +166,10 @@ function checkGameOver() {
         }
         
         reason += newDundieText;
+
+        // NEW: If you get fired, delete the save file so you can't cheat!
+        localStorage.removeItem('officeSaveState');
+
         document.getElementById('game-over-reason').innerText = reason;
         document.getElementById('game-over-modal').style.display = 'flex';
     }
@@ -162,6 +179,7 @@ document.getElementById('restart-btn').onclick = () => {
     state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
     days = 1; 
     activeDeck = []; 
+    localStorage.removeItem('officeSaveState'); // Clear save to be safe
     document.getElementById('game-over-modal').style.display = 'none';
     updateUI();
     loadCard();
