@@ -323,5 +323,134 @@ const deck = [
         text: "We are printing in all colors! Why is every email printed in color?! I want color printing locked down immediately.",
         left: { text: "Defend the staff.", impact: { sales: 0, morale: +15, corporate: -20, budget: -10 } },
         right: { text: "Lock it down.", impact: { sales: 0, morale: -15, corporate: +20, budget: +15 } }
+    },
+    // --- EXPANSION PACK 2: PR NIGHTMARES & NEW LORE ---
+
+    // CLIENTS & PR NIGHTMARES
+    {
+        character: "Client Email", image: "corporate.gif",
+        text: "A local paper mill wants us to supply 10,000 reams for their 'Save the Trees' flyer. The irony is going viral on Twitter.",
+        left: { text: "Cancel the order.", impact: { sales: -15, morale: +5, corporate: +10, budget: 0 } },
+        right: { text: "Take their money.", impact: { sales: +20, morale: -10, corporate: -15, budget: +5 } }
+    },
+    {
+        character: "Client Call", image: "corporate.gif",
+        text: "The Blue Cross hospital account is furious. A ream of our paper had an obscene watermark on it. They are threatening to walk.",
+        left: { text: "Offer a 50% discount.", impact: { sales: +10, morale: 0, corporate: -10, budget: -15 } },
+        right: { text: "Blame the supplier.", impact: { sales: -20, morale: +5, corporate: +5, budget: 0 } }
+    },
+    {
+        character: "Michael Scott", image: "michael.gif",
+        text: "I promised a very important client that we could deliver 50 boxes of paper using a fleet of horse-drawn carriages.",
+        left: { text: "Rent the horses.", impact: { sales: +15, morale: +10, corporate: -10, budget: -20 } },
+        right: { text: "Use the delivery truck.", impact: { sales: -15, morale: -10, corporate: +10, budget: 0 } }
+    },
+
+    // OUT-OF-SHOW ORIGINALS
+    {
+        character: "Dwight Schrute", image: "dwight.gif",
+        text: "I sustained a severe laceration during a Battlestar Galactica LARP event. Do I get paid medical leave or should I bleed on the merchandise?",
+        left: { text: "Take unpaid time off.", impact: { sales: -5, morale: -10, corporate: +10, budget: 0 } },
+        right: { text: "Approve paid leave.", impact: { sales: 0, morale: +5, corporate: -5, budget: -10 } }
+    },
+    {
+        character: "Jim Halpert", image: "jim.gif",
+        text: "I invented a fake employee named 'Lloyd Gross' so I can take an extra slice of commission. Just sign this form.",
+        left: { text: "That is fraud.", impact: { sales: 0, morale: -15, corporate: +15, budget: +5 } },
+        right: { text: "Good for you, Jim.", impact: { sales: +10, morale: +10, corporate: -15, budget: -10 } }
+    },
+    {
+        character: "Pam Beesly", image: "pam.gif",
+        text: "I kind of just made up the title 'Office Administrator' so I could get a raise. Can you back me up if Corporate asks?",
+        left: { text: "I can't lie for you.", impact: { sales: 0, morale: -15, corporate: +10, budget: +10 } },
+        right: { text: "You're the Admin now.", impact: { sales: 0, morale: +15, corporate: -10, budget: -15 } }
+    },
+    {
+        character: "Creed Bratton", image: "creed.gif",
+        text: "I’ve been running a small cult in the warehouse on weekends. We need an advance on my paycheck to buy matching tracksuits.",
+        left: { text: "Call the police.", impact: { sales: 0, morale: -10, corporate: +15, budget: 0 } },
+        right: { text: "Have fun, Creed.", impact: { sales: 0, morale: +5, corporate: -15, budget: -5 } }
+    },
+    {
+        character: "Kelly Kapoor", image: "kelly.gif",
+        text: "I told Ryan I was pregnant so he would buy me dinner, but now Corporate wants to send me a maternity gift basket.",
+        left: { text: "Tell them the truth.", impact: { sales: 0, morale: -15, corporate: +10, budget: 0 } },
+        right: { text: "Accept the basket.", impact: { sales: 0, morale: +10, corporate: -15, budget: -5 } }
+    },
+    {
+        character: "Ryan Howard", image: "ryan.gif",
+        text: "I bought an espresso machine for the annex using the petty cash fund. Productivity is going to skyrocket. Trust me.",
+        left: { text: "Return it.", impact: { sales: -5, morale: -15, corporate: +5, budget: +15 } },
+        right: { text: "I love espresso.", impact: { sales: +10, morale: +15, corporate: -10, budget: -20 } }
+    },
+    {
+        character: "Stanley Hudson", image: "stanley.gif",
+        text: "The elevator is broken. I am not walking up those stairs. Bring my desk down to the parking lot.",
+        left: { text: "Take the stairs.", impact: { sales: +5, morale: -20, corporate: +5, budget: 0 } },
+        right: { text: "Move his desk.", impact: { sales: -15, morale: +10, corporate: -5, budget: -5 } }
+    },
+    {
+        character: "Angela Martin", image: "angela.gif",
+        text: "I refuse to use the new hand sanitizer. It smells like sin and compromises my immune system.",
+        left: { text: "Use the sanitizer.", impact: { sales: 0, morale: -10, corporate: +5, budget: 0 } },
+        right: { text: "Buy her special soap.", impact: { sales: 0, morale: +5, corporate: -5, budget: -5 } }
+    },
+
+    // ADAPTED LATE-SEASON TROPES
+    {
+        character: "Dwight Schrute", image: "dwight.gif",
+        text: "I have compiled a list of everyone in the office. It's a two-column list. Winners, and Losers. I am treating them accordingly.",
+        left: { text: "Destroy the list.", impact: { sales: -5, morale: +15, corporate: +5, budget: 0 } },
+        right: { text: "Let me see the list.", impact: { sales: +10, morale: -20, corporate: -10, budget: 0 } }
+    },
+    {
+        character: "Michael Scott", image: "michael.gif",
+        text: "I’m forming an 'Inner Circle'. Only the cool people. We will be making all executive decisions from the breakroom.",
+        left: { text: "Disband the circle.", impact: { sales: +5, morale: -10, corporate: +10, budget: 0 } },
+        right: { text: "Can I join?", impact: { sales: -15, morale: +10, corporate: -15, budget: 0 } }
+    },
+    {
+        character: "Toby Flenderson", image: "toby.gif",
+        text: "I brought in a self-defense instructor because someone flashed Phyllis in the parking lot. The staff is... mocking him.",
+        left: { text: "Cancel the class.", impact: { sales: +10, morale: -5, corporate: -10, budget: +5 } },
+        right: { text: "Mandatory attendance.", impact: { sales: -15, morale: -15, corporate: +15, budget: -10 } }
+    },
+
+    // WACKY OFFICE DYNAMICS
+    {
+        character: "Kevin Malone", image: "kevin.gif",
+        text: "I figured out a new way to do math. If you just leave out the 'Klevin', we actually have a massive budget surplus.",
+        left: { text: "That's embezzling.", impact: { sales: 0, morale: -10, corporate: +15, budget: 0 } },
+        right: { text: "Use the Klevin.", impact: { sales: 0, morale: +15, corporate: -25, budget: +20 } }
+    },
+    {
+        character: "Meredith Palmer", image: "meredith.gif",
+        text: "I need you to sign off on my expense report. It’s mostly for outback steakhouse gift cards and... industrial lubricants.",
+        left: { text: "Absolutely not.", impact: { sales: 0, morale: -10, corporate: +10, budget: +5 } },
+        right: { text: "Looks fine to me.", impact: { sales: 0, morale: +10, corporate: -10, budget: -15 } }
+    },
+    {
+        character: "Phyllis Vance", image: "phyllis.gif",
+        text: "I am being blackmailed. Someone has photos of me at a bachelorette party in 1998. I need $500 from the petty cash.",
+        left: { text: "Not my problem.", impact: { sales: 0, morale: -15, corporate: 0, budget: 0 } },
+        right: { text: "Here is the money.", impact: { sales: 0, morale: +5, corporate: -10, budget: -15 } }
+    },
+    {
+        character: "Oscar Martinez", image: "oscar.gif",
+        text: "The hardwood floor under the carpet looks amazing. We should rip up all the carpet right now. During work hours.",
+        left: { text: "Leave the carpet.", impact: { sales: +5, morale: -10, corporate: 0, budget: 0 } },
+        right: { text: "Tear it up!", impact: { sales: -20, morale: +15, corporate: -5, budget: -10 } }
+    },
+    {
+        character: "David Wallace", image: "david.gif",
+        text: "We are thinking about sending your branch a 'Sabre' brand automated paper-selling robot. It will replace two salesmen.",
+        left: { text: "We don't want it.", impact: { sales: -10, morale: +20, corporate: -15, budget: -10 } },
+        right: { text: "Send the robot.", impact: { sales: +20, morale: -30, corporate: +15, budget: +15 } }
+    },
+    {
+        character: "Darryl Philbin", image: "darryl.gif",
+        text: "The warehouse guys want to form a union. You can either back us up, or we all walk out today.",
+        left: { text: "Walk out.", impact: { sales: -30, morale: -20, corporate: +10, budget: +10 } },
+        right: { text: "I support the union.", impact: { sales: 0, morale: +25, corporate: -30, budget: -20 } }
     }
 ];
