@@ -174,3 +174,40 @@ body {
     max-width: 400px;
     border: 2px solid #004182;
 }
+
+/* Dundie Awards Styling */
+.dundie-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    border-left: 5px solid #ccc;
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+}
+
+.dundie-item.unlocked {
+    background-color: #fff9e6;
+    border-left: 5px solid #ffcc00;
+    opacity: 1;
+}
+
+.dundie-icon {
+    font-size: 2em;
+    margin-right: 15px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.dundie-info h4 {
+    margin: 0 0 5px 0;
+    color: #004182;
+}
+
+.dundie-info p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #555;
+}
+
