@@ -1,4 +1,4 @@
-const CACHE_NAME = 'manager-v1.3';
+const CACHE_NAME = 'manager-v1.4';
 
 // The core files that must load instantly
 const CORE_ASSETS = [
