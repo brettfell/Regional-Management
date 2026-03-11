@@ -1,6 +1,5 @@
 let state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
-let lastCard = null; 
-
+let activeDeck = []; 
 let days = 1;
 let highScore = localStorage.getItem('officeHighScore') || 0;
 
@@ -17,6 +16,16 @@ const btnRight = document.getElementById('btn-right');
 
 const currentDayEl = document.getElementById('current-day');
 const highScoreEl = document.getElementById('high-score');
+const themeSong = document.getElementById('theme-song');
+
+// --- START GAME LOGIC ---
+document.getElementById('start-btn').onclick = () => {
+    document.getElementById('start-modal').style.display = 'none';
+    themeSong.volume = 0.3; // Keeps the music from blowing out your speakers
+    themeSong.play().catch(e => console.log("Audio play blocked by browser."));
+    updateUI();
+    loadCard();
+};
 
 function updateUI() {
     state.sales = Math.max(0, Math.min(100, state.sales));
@@ -29,7 +38,6 @@ function updateUI() {
     fillCorporate.style.width = state.corporate + '%';
     fillBudget.style.width = state.budget + '%';
 
-    // NEW: Danger Zone Logic (Activates if <= 20 or >= 80)
     fillSales.classList.toggle('danger', state.sales <= 20 || state.sales >= 80);
     fillMorale.classList.toggle('danger', state.morale <= 20 || state.morale >= 80);
     fillCorporate.classList.toggle('danger', state.corporate <= 20 || state.corporate >= 80);
@@ -37,25 +45,21 @@ function updateUI() {
 
     currentDayEl.innerText = `Day: ${days}`;
     highScoreEl.innerText = `Best: ${highScore}`;
-
     checkGameOver();
 }
 
 function loadCard() {
-    // If cards.js didn't load properly, stop the function
-    if (typeof deck === 'undefined' || deck.length === 0) {
-        cardName.innerText = "Error";
-        cardText.innerText = "Deck not found. Check cards.js link.";
-        return;
+    if (typeof deck === 'undefined' || deck.length === 0) return;
+
+    // IRONCLAD SHUFFLE: If active deck is empty, copy the master deck
+    if (activeDeck.length === 0) {
+        activeDeck = [...deck]; 
     }
 
-    let card = deck[Math.floor(Math.random() * deck.length)];
-    while (card === lastCard && deck.length > 1) {
-        card = deck[Math.floor(Math.random() * deck.length)];
-    }
-    lastCard = card;
+    // Pick a random card, and REMOVE IT from the active deck using splice
+    const randomIndex = Math.floor(Math.random() * activeDeck.length);
+    const card = activeDeck.splice(randomIndex, 1)[0]; 
     
-    // Safety check for image
     if (cardImage) {
         cardImage.src = card.image || "";
         cardImage.style.display = card.image ? 'inline-block' : 'none';
@@ -109,10 +113,8 @@ function checkGameOver() {
 document.getElementById('restart-btn').onclick = () => {
     state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
     days = 1; 
+    activeDeck = []; // Flushes the draw pile
     document.getElementById('game-over-modal').style.display = 'none';
     updateUI();
     loadCard();
 };
-
-updateUI();
-loadCard();
