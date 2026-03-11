@@ -2,6 +2,7 @@ let state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
 let activeDeck = []; 
 let days = 1;
 let highScore = localStorage.getItem('officeHighScore') || 0;
+let unlockedDundies = JSON.parse(localStorage.getItem('officeDundies')) || [];
 
 const fillSales = document.getElementById('fill-sales');
 const fillMorale = document.getElementById('fill-morale');
@@ -18,14 +19,64 @@ const currentDayEl = document.getElementById('current-day');
 const highScoreEl = document.getElementById('high-score');
 const themeSong = document.getElementById('theme-song');
 
-// --- START GAME LOGIC ---
+// --- THE DUNDIES DIRECTORY ---
+const dundiesList = [
+    { id: "survivor_30", name: "The Survivor Dundie", desc: "Survive 30 Days in a single run.", icon: "🗓️" },
+    { id: "survivor_50", name: "The Golden Ticket Dundie", desc: "Survive 50 Days in a single run.", icon: "🎫" },
+    { id: "fired_morale", name: "The Toby Dundie", desc: "Get fired because Morale hit 0%.", icon: "🐌" },
+    { id: "fired_corporate_100", name: "The Ryan Howard Dundie", desc: "Get arrested for fraud (Corporate hit 100%).", icon: "📱" },
+    { id: "fired_budget", name: "The Michael Scott Paper Co. Dundie", desc: "Bankrupt the branch (Budget hit 0%).", icon: "💸" },
+    { id: "party_100", name: "The Party Planning Dundie", desc: "Throw a non-stop party (Morale hit 100%).", icon: "🎈" },
+    { id: "fired_sales", name: "The Stamford Merge Dundie", desc: "Get absorbed by Stamford (Sales hit 0%).", icon: "📦" }
+];
+
+// --- MODAL & BUTTON WIRING ---
 document.getElementById('start-btn').onclick = () => {
     document.getElementById('start-modal').style.display = 'none';
-    themeSong.volume = 0.3; // Keeps the music from blowing out your speakers
-    themeSong.play().catch(e => console.log("Audio play blocked by browser."));
+    if(themeSong) {
+        themeSong.volume = 0.3; 
+        themeSong.play().catch(e => console.log("Audio play blocked."));
+    }
     updateUI();
     loadCard();
 };
+
+document.getElementById('dundies-btn').onclick = () => {
+    renderDundies();
+    document.getElementById('dundies-modal').style.display = 'flex';
+};
+
+document.getElementById('close-dundies-btn').onclick = () => {
+    document.getElementById('dundies-modal').style.display = 'none';
+};
+
+function renderDundies() {
+    const list = document.getElementById('dundies-list');
+    list.innerHTML = '';
+    dundiesList.forEach(d => {
+        const isUnlocked = unlockedDundies.includes(d.id);
+        list.innerHTML += `
+            <div class="dundie-item ${isUnlocked ? 'unlocked' : ''}">
+                <div class="dundie-icon">${isUnlocked ? d.icon : '🔒'}</div>
+                <div class="dundie-info">
+                    <h4>${isUnlocked ? d.name : '???'}</h4>
+                    <p>${isUnlocked ? d.desc : 'Keep playing to unlock.'}</p>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Checks if a Dundie is new, saves it, and returns the name to display
+function checkDundieUnlock(id) {
+    if (!unlockedDundies.includes(id)) {
+        unlockedDundies.push(id);
+        localStorage.setItem('officeDundies', JSON.stringify(unlockedDundies));
+        let dundieObj = dundiesList.find(d => d.id === id);
+        return dundieObj ? `\n\n🏆 UNLOCKED: ${dundieObj.name}!` : '';
+    }
+    return '';
+}
 
 function updateUI() {
     state.sales = Math.max(0, Math.min(100, state.sales));
@@ -40,7 +91,7 @@ function updateUI() {
 
     fillSales.classList.toggle('danger', state.sales <= 20 || state.sales >= 80);
     fillMorale.classList.toggle('danger', state.morale <= 20 || state.morale >= 80);
-    fillCorporate.classList.toggle('danger', state.corporate <= 20 || state.corporate >= 80);
+    fillCorporate.classList.toggle('danger', corporate <= 20 || state.corporate >= 80);
     fillBudget.classList.toggle('danger', state.budget <= 20 || state.budget >= 80);
 
     currentDayEl.innerText = `Day: ${days}`;
@@ -51,12 +102,10 @@ function updateUI() {
 function loadCard() {
     if (typeof deck === 'undefined' || deck.length === 0) return;
 
-    // IRONCLAD SHUFFLE: If active deck is empty, copy the master deck
     if (activeDeck.length === 0) {
         activeDeck = [...deck]; 
     }
 
-    // Pick a random card, and REMOVE IT from the active deck using splice
     const randomIndex = Math.floor(Math.random() * activeDeck.length);
     const card = activeDeck.splice(randomIndex, 1)[0]; 
     
@@ -81,20 +130,25 @@ function applyImpact(impact) {
     state.budget += impact.budget;
 
     days++; 
+    
+    // Check for milestone Dundies during the run!
+    if (days === 30) checkDundieUnlock('survivor_30');
+    if (days === 50) checkDundieUnlock('survivor_50');
+
     updateUI();
     loadCard();
 }
 
 function checkGameOver() {
     let reason = "";
+    let newDundieText = "";
 
-    if (state.sales <= 0) reason = "Sales hit zero. The Scranton branch was absorbed by Stamford.";
-    if (state.budget <= 0) reason = "You bankrupted the branch. David Wallace drove down to fire you personally.";
-    if (state.corporate <= 0) reason = "Corporate lost all faith in your leadership. You've been replaced.";
-    if (state.morale <= 0) reason = "Morale is so low that Toby filed a report. HR fired you.";
-    
-    if (state.morale >= 100) reason = "The office became a non-stop party. No work got done, and the branch closed.";
-    if (state.corporate >= 100) reason = "Corporate loved you so much they promoted you... but you were arrested for fraud.";
+    if (state.sales <= 0) { reason = "Sales hit zero. The Scranton branch was absorbed by Stamford."; newDundieText = checkDundieUnlock('fired_sales'); }
+    else if (state.budget <= 0) { reason = "You bankrupted the branch. David Wallace drove down to fire you personally."; newDundieText = checkDundieUnlock('fired_budget'); }
+    else if (state.corporate <= 0) { reason = "Corporate lost all faith in your leadership. You've been replaced."; }
+    else if (state.morale <= 0) { reason = "Morale is so low that Toby filed a report. HR fired you."; newDundieText = checkDundieUnlock('fired_morale'); }
+    else if (state.morale >= 100) { reason = "The office became a non-stop party. No work got done, and the branch closed."; newDundieText = checkDundieUnlock('party_100'); }
+    else if (state.corporate >= 100) { reason = "Corporate loved you so much they promoted you... but you were arrested for fraud."; newDundieText = checkDundieUnlock('fired_corporate_100'); }
 
     if (reason !== "") {
         if (days > highScore) {
@@ -104,6 +158,9 @@ function checkGameOver() {
         } else {
             reason += `\n\nYou survived ${days} Days. (Best: ${highScore})`;
         }
+        
+        // Append newly unlocked Dundie text to the game over screen
+        reason += newDundieText;
 
         document.getElementById('game-over-reason').innerText = reason;
         document.getElementById('game-over-modal').style.display = 'flex';
@@ -113,7 +170,7 @@ function checkGameOver() {
 document.getElementById('restart-btn').onclick = () => {
     state = { sales: 50, morale: 50, corporate: 50, budget: 50 };
     days = 1; 
-    activeDeck = []; // Flushes the draw pile
+    activeDeck = []; 
     document.getElementById('game-over-modal').style.display = 'none';
     updateUI();
     loadCard();
