@@ -49,7 +49,7 @@ const deck = [
         right: { text: "Send Ryan.", impact: { sales: -5, morale: +10, corporate: -5, budget: 0 } }
     },
     {
-        character: "Michael Scott", image: "michael-meeting.gif",
+        character: "Michael Scott", image: "michael.gif",
         text: "I'm calling an emergency 3-hour conference room meeting to teach you the 'Scranton Strangler' threat level protocols.",
         left: { text: "Cancel the meeting.", impact: { sales: +20, morale: -15, corporate: +15, budget: 0 } },
         right: { text: "To the conference room!", impact: { sales: -30, morale: +25, corporate: -20, budget: 0 } }
